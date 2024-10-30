@@ -1,8 +1,8 @@
 import { baseUrl } from "../../../constants";
-import { userToken } from "../../../utils/getToken";
+import { adminToken, userToken } from "../../../utils/getToken";
 import { apiSlice } from "../../api/apiSlice";
 
-const { token } = userToken();
+const { token } = adminToken();
 
 export const studentSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,9 +11,9 @@ export const studentSlice = apiSlice.injectEndpoints({
         url: `${baseUrl}/users/`,
         method: `POST`,
         body: data,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }),
     }),
     allStudents: builder.query({

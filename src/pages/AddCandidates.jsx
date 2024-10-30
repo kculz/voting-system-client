@@ -33,9 +33,14 @@ const submitForm = async (e) => {
   formData.append('avator', values.avator);
 
   try {
-    await addCandidate(formData).unwrap();
-    navigate('/candidates');
-    window.location.reload();
+    const res = await addCandidate(formData).unwrap();
+    console.log(res)
+    if(res.success){
+      navigate('/all-candidates');
+      window.location.reload();
+    }else{
+      toast.error(res?.data?.msg || res?.data?.error || res?.msg)
+    }
   } catch (err) {
     console.log(err);
     toast.error(err?.data?.msg || err?.data?.message || err?.message);
@@ -88,8 +93,8 @@ const submitForm = async (e) => {
           <datalist id="pos">
             <option value="President">President</option>
             <option value="Vice President">Vice President</option>
-            <option value="Finance Manager">Finance Manager</option>
-            <option value="Entertainment">Entertainment</option>
+            <option value="Treasurer">Treasurer</option>
+            <option value="Secretary General">Secretary General</option>
           </datalist>
         </div>
 
@@ -134,9 +139,8 @@ const submitForm = async (e) => {
             onChange={(e) => setValues({ ...values, party: e.target.value })}
           >
             <option></option>
-            <option>ZINASU</option>
-            <option>ZICOSO</option>
-            <option>Independent</option>
+            <option>Youth United</option>
+            <option>Campus Voices</option>
           </Select>
         </div>
 

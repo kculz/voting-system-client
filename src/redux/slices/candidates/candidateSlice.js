@@ -11,6 +11,9 @@ export const candidateSlice = apiSlice.injectEndpoints({
         url: `${baseUrl}/candidates/`,
         method: `POST`,
         body: data,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       }),
     }),
 
@@ -51,8 +54,14 @@ export const candidateSlice = apiSlice.injectEndpoints({
       }),
     }),
 
+    getWinner: builder.query({
+      query: () => ({
+        url: `${baseUrl}/candidates/winner`,
+        method: `GET`
+      }),
+    }),
 
   }),
 });
 
-export const { useAddCandidateMutation, useAllCandidatesQuery, useGetEnCandidatesQuery, useGetFMCandidatesQuery, useGetPresCandidatesQuery, useGetVpCandidatesQuery } = candidateSlice;
+export const { useAddCandidateMutation, useAllCandidatesQuery, useGetEnCandidatesQuery, useGetFMCandidatesQuery, useGetPresCandidatesQuery, useGetVpCandidatesQuery, useGetWinnerQuery } = candidateSlice;

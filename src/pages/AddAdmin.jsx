@@ -37,7 +37,7 @@ const AddAdmin = () => {
         try {
             const res = await adminRegister(values).unwrap();
             if(res.success){
-              navigate('/admins');
+              navigate('/all-admins');
               window.location.reload();
             }else{
               toast.error(res.error);
@@ -112,9 +112,7 @@ const AddAdmin = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               onClick={(e) => setValues({ ...values, role: e.target.value })}
             >
-              <option value=""></option>
               <option value="admin">Admin</option>
-              <option value="super-admin">Super Admin</option>
             </select>
           </div>
           <div className="flex items-center justify-between">

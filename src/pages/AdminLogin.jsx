@@ -24,7 +24,7 @@ const AdminLogin = () => {
        const res = await adminLogin(values).unwrap();
        dispatch(setAdminCredentials({ ...res }));
        if(res.success){
-          navigate('/admin-page');
+          navigate('/dashboard');
           window.location.reload();
        }else{
         toast.error(res.msg);

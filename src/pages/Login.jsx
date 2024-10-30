@@ -20,7 +20,7 @@ const Login = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-      if(user){
+      if(user?.data?.role === 'user'){
         navigate("/home");
       }
     }, [navigate, user]);
@@ -35,7 +35,7 @@ const Login = () => {
            dispatch(setCredentials({ ...res }));
            console.log(res);
            if (res.success) {
-             navigate('/admin-page');
+             navigate('/home');
              window.location.reload();
            } else {
              toast.error(res.msg);

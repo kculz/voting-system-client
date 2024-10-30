@@ -16,14 +16,30 @@ const AddUser = () => {
         password: ""
     });
 
+    const flattenErrorValues = (error) => {
+      const errors = [];
+
+      Object.keys(error).forEach((key) => {
+        if (typeof error[key] === 'object') {
+          errors.push(...flattenErrorValues(error[key]));
+        } else if (Array.isArray(error[key])) {
+          errors.push(...error[key]);
+        } else {
+          errors.push(error[key]);
+        }
+      });
+
+      return errors;
+    };
     const navigate = useNavigate();
 
     const submitForm = async(e) => {
         e.preventDefault();
 
         try {
-            await addStudent(values).unwrap();
-            navigate("/students");
+            const res = await addStudent(values).unwrap();
+            console.log(res)
+            navigate("/all-students");
             window.location.reload();
         } catch (err) {
             console.log(err);
@@ -32,13 +48,18 @@ const AddUser = () => {
     }
   return (
     <div className="flex flex-col items-center justify-center mt-24">
-      {isLoading
-        ? 'Loading...'
-        : isError && (
-            <p className="text-red-800">
-              <span className="text-red-500">Error:</span> {error}{' '}
+      {isLoading ? (
+            'Checking Details'
+          ) : isError ? (
+            <p className="text-red-700 text-lg">
+             
+                {flattenErrorValues(error).map((value, index) => (
+                  <p className="text-red-500 text-sm ml-3" key={index}>
+                    {value}
+                  </p>
+                ))}
             </p>
-          )}
+          ) : null}
       <h1 className="text-2xl font-bold mb-5">Add Users || Students</h1>
       <form
         className=" max-w-2xl min-w-[500px] grid grid-cols-2  gap-4"

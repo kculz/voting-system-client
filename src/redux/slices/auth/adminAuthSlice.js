@@ -17,6 +17,7 @@ const adminAuthSlice = createSlice({
     clearAdminCredentials: (state) => {
       state.admin = null;
       localStorage.removeItem('admin');
+      console.log('Removed admin from local storage');
     },
   },
 });

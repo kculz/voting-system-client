@@ -15,8 +15,18 @@ export const voteSlice = apiSlice.injectEndpoints({
                 }
             })
         }),
+        getVotesByPosition: builder.query({
+            query: () => ({
+              url: `${baseUrl}/vote/votes-by-position`,
+              method: 'GET',
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }),
+        }),
 
+       
     })
 });
 
-export const { useVoteMutation } = voteSlice;
+export const { useVoteMutation, useGetVotesByPositionQuery } = voteSlice;

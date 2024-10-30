@@ -1,37 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+
+const launchDate = new Date('2024-10-24T00:00:00.000Z'); // Specify the end date here
 
 const CountDown = () => {
-  const navigate = useNavigate();
-  const [days, setDays] = useState(5);
+  const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
-    let interval = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds(seconds - 1);
-      } else if (minutes > 0) {
-        setMinutes(minutes - 1);
-        setSeconds(59);
-      } else if (hours > 0) {
-        setHours(hours - 1);
-        setMinutes(59);
-        setSeconds(59);
-      } else if (days > 0) {
-        setDays(days - 1);
-        setHours(23);
-        setMinutes(59);
-        setSeconds(59);
-      } else {
-        navigate('/winner');
-        clearInterval(interval);
-      }
+    const timer = setInterval(() => {
+      const timeLeft = getTimeLeft();
+      setDays(timeLeft.days);
+      setHours(timeLeft.hours);
+      setMinutes(timeLeft.minutes);
+      setSeconds(timeLeft.seconds);
     }, 1000);
 
-    return () => clearInterval(interval);
-  }, [days, hours, minutes, seconds, history]);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  function getTimeLeft() {
+    const currentDate = new Date();
+    const timeDifference = launchDate - currentDate;
+
+    if (timeDifference <= 0) {
+      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    }
+
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+    return { days, hours, minutes, seconds };
+  }
 
   return (
     <div

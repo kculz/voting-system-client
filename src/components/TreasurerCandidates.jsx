@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useGetVpCandidatesQuery } from '../redux/slices/candidates/candidateSlice';
-import { Card } from 'flowbite-react';
-import { Link } from 'react-router-dom';
+import { useGetEnCandidatesQuery } from '../redux/slices/candidates/candidateSlice';
 import { useVoteMutation } from '../redux/slices/votes/voteSlice';
+import { Card } from 'flowbite-react';
+import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 
-const VicePresidentialCandidates = () => {
+const TreasurerCandidates = () => {
     const [candidates, setCandidates] = useState([]);
-    const { data, isError, isLoading, error } = useGetVpCandidatesQuery();
+    const { data, isError, isLoading, error } = useGetEnCandidatesQuery();
 
     const [
         vote,
@@ -48,10 +48,10 @@ const VicePresidentialCandidates = () => {
                 ? 'Voting'
                 : isVotingError && (
                     <p className="text-red-400">
-                        <span className="text-red-800">Error:</span>{' '}
-                        {votingError.data.msg}
+                        <span className="text-red-800">Error:</span> {votingError.data.msg}
                     </p>
                 )}
+
             <div className="grid grid-cols-2 place-content-center place-items-center px-10 ">
                 {candidates.map((candidate) => (
                     <Card key={candidate.id} className="max-w-sm">
@@ -89,6 +89,6 @@ const VicePresidentialCandidates = () => {
             </div>
         </div>
     );
-}
+};
 
-export default VicePresidentialCandidates;
+export default TreasurerCandidates;
